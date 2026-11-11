@@ -1,0 +1,3 @@
+interface:
+  display_name: "Architecture"
+  short_description: "Архитектура React: View, Presenter и дерево компонентов"

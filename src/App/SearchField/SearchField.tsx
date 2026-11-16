@@ -1,14 +1,12 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
-import type { ChangeEventHandler } from "react";
 import { Input } from "uikit/Input/Input";
+import type { SearchFieldProps } from "./types";
+import { usePresenter } from "./usePresenter";
 import styles from "./SearchField.module.css";
 
-interface Props {
-  query: string;
-  onQueryChange: ChangeEventHandler<HTMLInputElement>;
-}
+export function SearchField(props: SearchFieldProps) {
+  const { query, handleQueryChange } = usePresenter(props);
 
-export function SearchField({ query, onQueryChange }: Props) {
   return (
     <div role="search">
       <label className={styles.label} htmlFor="show-search">
@@ -26,7 +24,7 @@ export function SearchField({ query, onQueryChange }: Props) {
           name="q"
           placeholder="Введите название шоу…"
           value={query}
-          onChange={onQueryChange}
+          onChange={handleQueryChange}
           autoComplete="off"
           spellCheck={false}
           aria-controls="search-results"

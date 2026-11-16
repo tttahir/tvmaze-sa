@@ -11,8 +11,23 @@
 в котором они вызываются: `usePresenter(props)`.
 
 Пропсы, которые не требуют обработки в Presenter, используй во View напрямую
-через `props`, например `props.loading`. Не возвращай неизменённые пропсы
+через `props`, например `props.isLoading`. Не возвращай неизменённые пропсы
 из `usePresenter`: возвращай только данные и обработчики, которые он формирует.
+
+## Именование
+
+Следуй правилам из
+[api-and-interface-design — «5. Predictable Naming»](https://github.com/addyosmani/agent-skills/blob/main/skills/api-and-interface-design/SKILL.md#5-predictable-naming):
+
+- REST-эндпоинты называй существительными во множественном числе, без глаголов:
+  `GET /api/tasks`, `POST /api/tasks`.
+- Для query-параметров используй `camelCase`: `sortBy`, `pageSize`.
+- Для полей ответов используй `camelCase`: `createdAt`, `updatedAt`, `taskId`.
+- Булевые переменные, поля объектов и пропсы называй с префиксами `is`, `has`
+  или `can`: `isLoading`, `isComplete`, `hasAttachments`, `canEdit`.
+  Используй `is` для состояния или свойства, `has` для наличия, `can` для
+  возможности или разрешения.
+- Для значений перечислений используй `UPPER_SNAKE_CASE`: `IN_PROGRESS`, `COMPLETED`.
 
 ## UI-компоненты и иконки
 

@@ -32,3 +32,13 @@
 ## UI-компоненты и иконки
 
 Для базовых UI-компонентов используй @base-ui/react, для иконок — @phosphor-icons/react.
+
+## Коммиты
+
+Для сообщений коммитов используй
+[Conventional Commits](https://www.conventionalcommits.org/ru/v1.0.0/)
+и правила из `commitlint.config.js`.
+
+Формат: `<type>(<scope>): <description>`, где `scope` необязателен.
+Например: `feat(search): add genre filters`, `fix: handle empty results`.
+Несовместимые изменения отмечай `!` перед двоеточием или футером `BREAKING CHANGE:`.

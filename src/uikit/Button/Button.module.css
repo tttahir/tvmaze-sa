@@ -1,0 +1,24 @@
+.button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+}
+
+.button:hover:not([data-disabled]) {
+  border-color: var(--accent);
+  background: var(--bg-elevated);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

@@ -1,0 +1,20 @@
+.page {
+  min-height: 100svh;
+  padding: clamp(64px, 15vh, 160px) 24px 48px;
+  background: radial-gradient(
+    ellipse at 50% 0,
+    var(--accent-subtle),
+    transparent 55%
+  );
+}
+
+.search {
+  width: min(100%, 640px);
+  margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding-inline: 16px;
+  }
+}

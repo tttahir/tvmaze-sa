@@ -5,6 +5,7 @@ import { TvMazeApi } from "api/tvMaze/tvMaze.api";
 import {
   selectQuery,
   selectSetQuery,
+  selectStartSearch,
   selectCompleteSearch,
   selectFailSearch,
 } from "App/store/selectors";
@@ -16,12 +17,20 @@ const SEARCH_DEBOUNCE_DELAY = 350;
 export function usePresenter(_props: SearchFieldProps) {
   const query = useSearchStore(selectQuery);
   const setQuery = useSearchStore(selectSetQuery);
+  const startSearch = useSearchStore(selectStartSearch);
   const completeSearch = useSearchStore(selectCompleteSearch);
   const failSearch = useSearchStore(selectFailSearch);
+  const inputRef = useRef<HTMLInputElement>(null);
   const searchControllerRef = useRef<AbortController | null>(null);
   const debouncedSearch = useMemo(
     () =>
       debounce(async (showName: string, signal: AbortSignal) => {
+        const { searchQuery, hasSearched } = useSearchStore.getState();
+        if (hasSearched && showName === searchQuery) return;
+
+        startSearch(showName);
+        if (!showName) return;
+
         try {
           const results = await TvMazeApi.searchShows(showName, signal);
           if (!signal.aborted) {
@@ -33,7 +42,7 @@ export function usePresenter(_props: SearchFieldProps) {
           }
         }
       }, SEARCH_DEBOUNCE_DELAY),
-    [completeSearch, failSearch],
+    [startSearch, completeSearch, failSearch],
   );
 
   useEffect(
@@ -44,20 +53,33 @@ export function usePresenter(_props: SearchFieldProps) {
     [debouncedSearch],
   );
 
-  function handleQueryChange(event: ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value;
+  function updateQuery(value: string) {
     const showName = value.trim();
 
     debouncedSearch.cancel();
     searchControllerRef.current?.abort();
     setQuery(value);
 
-    if (!showName) return;
-
     const controller = new AbortController();
     searchControllerRef.current = controller;
     debouncedSearch(showName, controller.signal);
   }
 
-  return { query, handleQueryChange };
+  function handleQueryChange(event: ChangeEvent<HTMLInputElement>) {
+    updateQuery(event.target.value);
+  }
+
+  function handleClearQuery() {
+    updateQuery("");
+    debouncedSearch.flush();
+    inputRef.current?.focus();
+  }
+
+  return {
+    query,
+    hasQuery: query.length > 0,
+    inputRef,
+    handleQueryChange,
+    handleClearQuery,
+  };
 }

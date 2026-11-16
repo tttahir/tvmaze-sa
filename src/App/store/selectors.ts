@@ -9,6 +9,7 @@ export const selectHasError = (state: SearchStore) => state.hasError;
 export const selectHasSearched = (state: SearchStore) => state.hasSearched;
 
 export const selectSetQuery = (state: SearchStore) => state.setQuery;
+export const selectStartSearch = (state: SearchStore) => state.startSearch;
 export const selectSetCurrentPage = (state: SearchStore) =>
   state.setCurrentPage;
 export const selectSetSelectedGenre = (state: SearchStore) =>

@@ -1,11 +1,13 @@
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import { Button } from "uikit/Button/Button";
 import { Input } from "uikit/Input/Input";
 import type { SearchFieldProps } from "./types";
 import { usePresenter } from "./usePresenter";
 import styles from "./SearchField.module.css";
 
 export function SearchField(props: SearchFieldProps) {
-  const { query, handleQueryChange } = usePresenter(props);
+  const { query, hasQuery, inputRef, handleQueryChange, handleClearQuery } =
+    usePresenter(props);
 
   return (
     <div role="search">
@@ -19,6 +21,7 @@ export function SearchField(props: SearchFieldProps) {
           aria-hidden="true"
         />
         <Input
+          ref={inputRef}
           id="show-search"
           type="search"
           name="q"
@@ -29,6 +32,15 @@ export function SearchField(props: SearchFieldProps) {
           spellCheck={false}
           aria-controls="search-results"
         />
+        {hasQuery && (
+          <Button
+            className={styles.clearButton}
+            onClick={handleClearQuery}
+            aria-label="Очистить поиск"
+          >
+            <XIcon size={20} aria-hidden="true" />
+          </Button>
+        )}
       </div>
     </div>
   );

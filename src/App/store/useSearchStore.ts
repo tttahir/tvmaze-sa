@@ -5,12 +5,14 @@ import type { SearchStore } from "./types";
 export const useSearchStore = create<SearchStore>()((set) => ({
   ...initialState,
 
-  setQuery: (query) =>
-    set({
+  setQuery: (query) => set({ query }),
+  startSearch: (searchQuery) =>
+    set((state) => ({
       ...initialState,
-      query,
-      isLoading: Boolean(query.trim()),
-    }),
+      query: state.query,
+      searchQuery,
+      isLoading: Boolean(searchQuery),
+    })),
   setCurrentPage: (currentPage) => set({ currentPage }),
   setSelectedGenre: (selectedGenre) =>
     set((state) =>

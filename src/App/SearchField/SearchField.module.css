@@ -29,6 +29,27 @@
   color: var(--accent);
 }
 
+.field input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.field .clearButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.field .clearButton:hover:not([data-disabled]) {
+  background: transparent;
+  color: var(--text-primary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .field {
     transition: none;

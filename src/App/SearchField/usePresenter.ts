@@ -1,68 +1,16 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
-import debounce from "lodash/debounce";
-import { TvMazeApi } from "api/tvMaze/tvMaze.api";
-import {
-  selectQuery,
-  selectSetQuery,
-  selectStartSearch,
-  selectCompleteSearch,
-  selectFailSearch,
-} from "App/store/selectors";
-import { useSearchStore } from "App/store/useSearchStore";
 import type { SearchFieldProps } from "./types";
-
-const SEARCH_DEBOUNCE_DELAY = 350;
+import { useSearch } from "./useSearch";
 
 export function usePresenter(_props: SearchFieldProps) {
-  const query = useSearchStore(selectQuery);
-  const setQuery = useSearchStore(selectSetQuery);
-  const startSearch = useSearchStore(selectStartSearch);
-  const completeSearch = useSearchStore(selectCompleteSearch);
-  const failSearch = useSearchStore(selectFailSearch);
+  const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchControllerRef = useRef<AbortController | null>(null);
-  const debouncedSearch = useMemo(
-    () =>
-      debounce(async (showName: string, signal: AbortSignal) => {
-        const { searchQuery, hasSearched } = useSearchStore.getState();
-        if (hasSearched && showName === searchQuery) return;
-
-        startSearch(showName);
-        if (!showName) return;
-
-        try {
-          const results = await TvMazeApi.searchShows(showName, signal);
-          if (!signal.aborted) {
-            completeSearch(results.map(({ show }) => show));
-          }
-        } catch {
-          if (!signal.aborted) {
-            failSearch();
-          }
-        }
-      }, SEARCH_DEBOUNCE_DELAY),
-    [startSearch, completeSearch, failSearch],
-  );
-
-  useEffect(
-    () => () => {
-      debouncedSearch.cancel();
-      searchControllerRef.current?.abort();
-    },
-    [debouncedSearch],
-  );
+  const { search, flushSearch } = useSearch();
 
   function updateQuery(value: string) {
-    const showName = value.trim();
-
-    debouncedSearch.cancel();
-    searchControllerRef.current?.abort();
     setQuery(value);
-
-    const controller = new AbortController();
-    searchControllerRef.current = controller;
-    debouncedSearch(showName, controller.signal);
+    search(value);
   }
 
   function handleQueryChange(event: ChangeEvent<HTMLInputElement>) {
@@ -71,7 +19,7 @@ export function usePresenter(_props: SearchFieldProps) {
 
   function handleClearQuery() {
     updateQuery("");
-    debouncedSearch.flush();
+    flushSearch();
     inputRef.current?.focus();
   }
 

@@ -17,8 +17,11 @@ export interface RequestOptions extends Omit<RequestInit, "body"> {
 export class Api {
   private readonly config: ApiConfig;
 
-  constructor(config: ApiConfig) {
-    this.config = config;
+  constructor({
+    baseUrl = new URL("/api", import.meta.env.API_URL).href,
+    ...config
+  }: Partial<ApiConfig> = {}) {
+    this.config = { baseUrl, ...config };
   }
 
   async request<T = unknown>(

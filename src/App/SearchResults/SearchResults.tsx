@@ -2,7 +2,7 @@ import { ShowCard } from "App/SearchResults/ShowCard/ShowCard";
 import { Pagination } from "./Pagination/Pagination";
 import { GenreFilter } from "./GenreFilter/GenreFilter";
 import type { SearchResultsProps } from "./types";
-import { usePresenter } from "./usePresenter";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchResults.module.css";
 
 export function SearchResults(props: SearchResultsProps) {
@@ -28,9 +28,11 @@ export function SearchResults(props: SearchResultsProps) {
           onGenreChange={handleGenreChange}
         />
       )}
-      <p className={styles.message} role="status">
-        {statusMessage}
-      </p>
+      {statusMessage && (
+        <p className={styles.message} role="status">
+          {statusMessage}
+        </p>
+      )}
       {hasError && (
         <p className={styles.error} role="alert">
           Не удалось загрузить шоу. Проверьте соединение и повторите поиск.

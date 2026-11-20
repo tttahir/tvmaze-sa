@@ -9,7 +9,7 @@ import {
   selectSetSelectedGenre,
 } from "App/store/selectors";
 import { useSearchStore } from "App/store/useSearchStore";
-import type { SearchResultsProps } from "./types";
+import type { SearchResultsProps } from "../types";
 
 const SHOWS_PER_PAGE = 3;
 

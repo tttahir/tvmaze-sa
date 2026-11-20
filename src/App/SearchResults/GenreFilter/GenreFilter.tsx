@@ -1,6 +1,6 @@
 import { Button } from "uikit/Button/Button";
 import type { GenreFilterProps } from "./types";
-import { usePresenter } from "./usePresenter";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./GenreFilter.module.css";
 
 export function GenreFilter(props: GenreFilterProps) {

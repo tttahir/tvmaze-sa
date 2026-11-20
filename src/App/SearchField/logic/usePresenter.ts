@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
-import type { SearchFieldProps } from "./types";
+import type { SearchFieldProps } from "../types";
 import { useSearch } from "./useSearch";
 
 export function usePresenter(_props: SearchFieldProps) {

@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { Button } from "uikit/Button/Button";
 import { Input } from "uikit/Input/Input";
 import type { SearchFieldProps } from "./types";
-import { usePresenter } from "./usePresenter";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./SearchField.module.css";
 
 export function SearchField(props: SearchFieldProps) {

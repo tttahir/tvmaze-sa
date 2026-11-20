@@ -1,4 +1,4 @@
-import type { GenreFilterProps } from "./types";
+import type { GenreFilterProps } from "../types";
 
 export function usePresenter(props: GenreFilterProps) {
   return {

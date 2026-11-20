@@ -1,4 +1,4 @@
-import type { ShowCardProps } from "./types";
+import type { ShowCardProps } from "../types";
 
 export function usePresenter({ show }: ShowCardProps) {
   const summary = show.summary

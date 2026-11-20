@@ -1,6 +1,6 @@
 import { StarIcon } from "@phosphor-icons/react";
 import type { ShowCardProps } from "./types";
-import { usePresenter } from "./usePresenter";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./ShowCard.module.css";
 
 export function ShowCard(props: ShowCardProps) {

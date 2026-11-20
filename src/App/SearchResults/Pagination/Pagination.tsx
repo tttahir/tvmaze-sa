@@ -1,6 +1,6 @@
 import { Button } from "uikit/Button/Button";
 import type { PaginationProps } from "./types";
-import { usePresenter } from "./usePresenter";
+import { usePresenter } from "./logic/usePresenter";
 import styles from "./Pagination.module.css";
 
 export function Pagination(props: PaginationProps) {
